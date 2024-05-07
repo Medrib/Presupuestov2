@@ -1,10 +1,8 @@
 ﻿namespace Track.Order.Infrastructure.Repositories;
 
 using Microsoft.EntityFrameworkCore;
-using System.Data;
 using System.Linq.Expressions;
 using Track.Order.Application.Interfaces;
-using Track.Order.Domain.Entities;
 
 public class BaseRepository<TEntity, TEntityId> : IBaseRespository<TEntity, TEntityId>
     where TEntity : class
@@ -62,5 +60,7 @@ public class BaseRepository<TEntity, TEntityId> : IBaseRespository<TEntity, TEnt
             return await orderBy(query).ToListAsync();
         else
             return await query.ToListAsync();
+
+
     }
 }

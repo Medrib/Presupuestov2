@@ -1,6 +1,9 @@
 ﻿namespace Track.Order.Application.Interfaces;
 
+
 using Track.Order.Domain.Entities;
-public interface IOrderRepository : IBaseRespository<Gastos, int>
+
+public interface IIngresoRepository : IBaseRespository<Ingresos, int>
 {
+
 }

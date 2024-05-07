@@ -4,11 +4,11 @@ using Track.Order.Domain.Entities;
 
 namespace Track.Order.Infrastructure.EntityConfigurations;
 
-public class EstadosEntityConfiguration : IEntityTypeConfiguration<Estados>
+public class EstadosEntityConfiguration : IEntityTypeConfiguration<Presupuesto>
 {
-    public void Configure(EntityTypeBuilder<Estados> builder)
+    public void Configure(EntityTypeBuilder<Presupuesto> builder)
     {
-        builder.HasKey(estado => estado.IdEstado);
+        builder.HasKey(estado => estado.IDPresupuesto);
 
         builder.Property(estado => estado.Descripcion);
     }

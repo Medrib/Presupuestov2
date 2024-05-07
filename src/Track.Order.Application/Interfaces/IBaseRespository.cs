@@ -1,5 +1,4 @@
 ﻿using System.Linq.Expressions;
-using Track.Order.Domain.Entities;
 
 namespace Track.Order.Application.Interfaces;
 
@@ -20,5 +19,4 @@ public interface IBaseRespository<TEntity, TEntityId>
     Task UpdateAsync(TEntity entity);
 
     Task DeleteAsync(TEntity entity);
-
 }

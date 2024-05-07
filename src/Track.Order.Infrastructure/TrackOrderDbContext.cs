@@ -12,9 +12,9 @@ public class TrackOrderDbContext : DbContext
     {
     }
 
-    public DbSet<Orders> Orders => Set<Orders>();
-    public DbSet<Usuarios> Usuarios => Set<Usuarios>();
-    public DbSet<Estados> Estados => Set<Estados>();
+    public DbSet<Gastos> Gasto=> Set<Gastos>();
+    public DbSet<Usuario> Usuarios => Set<Usuario>();
+    public DbSet<CategoriaGasto> CategoriaGasto => Set<CategoriaGasto>();
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -4,14 +4,13 @@ using Track.Order.Domain.Entities;
 
 namespace Track.Order.Infrastructure.EntityConfigurations;
 
-public class UsuariosEntityConfiguration : IEntityTypeConfiguration<Usuarios>
+public class UsuariosEntityConfiguration : IEntityTypeConfiguration<CategoriaGasto>
 {
-    public void Configure(EntityTypeBuilder<Usuarios> builder)
+    public void Configure(EntityTypeBuilder<CategoriaGasto> builder)
     {
-        builder.HasKey(usuario => usuario.IdUsuario);
+        builder.HasKey(usuario => usuario.IDCategoriaGasto);
 
         builder.Property(usuario => usuario.Nombre);
-        builder.Property(usuario => usuario.CorreoElectronico);
-        builder.Property(usuario => usuario.IdCliente);
+        builder.Property(usuario => usuario.Descripcion);
     }
 }
