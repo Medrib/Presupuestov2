@@ -1,24 +1,21 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Track.Order.Api.Contracts.Gasto;
 using Track.Order.Api.Contracts.Order.SearchOrders;
 using Track.Order.Application.Interfaces;
 using Track.Order.Common;
-using Track.Order.Infrastructure;
 using Track.Order.Api.Contracts.Ingreso;
-using Track.Order.Domain.Entities;
 
 namespace Track.Order.Api.Controllers;
 
 [ApiController]
 [Route("/gastos")]
-public class OrderController : Controller
+public class GastosController : Controller
 {
     private readonly IOrderService _orderService;
     private readonly IMapper _mapper;
 
-    public OrderController(IOrderService orderService, IMapper mapper)
+    public GastosController(IOrderService orderService, IMapper mapper)
     {
         _orderService = orderService;
         _mapper = mapper;
@@ -88,7 +85,7 @@ public class OrderController : Controller
         }
         catch (Exception ex)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al agregar el gasto.");
+            return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al agregar el ingreso.");
         }
     }
 
