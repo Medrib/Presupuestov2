@@ -6,6 +6,7 @@ using Track.Order.Application.Interfaces;
 using Track.Order.Common.Models;
 using Track.Order.Domain.Entities;
 using Track.Order.Api.Contracts.Ingreso;
+using Track.Order.Api.Contracts.Cuenta;
 
 namespace Track.Order.Application.Services;
 
@@ -14,12 +15,14 @@ public class OrderService : IOrderService
     private readonly IOrderRepository _orderRepository;
     private readonly IIngresoRepository _ingresoRepository;
     private readonly ICategoriaRepository _categoriaRepository;
+    private readonly ICuentaRepository _cuentaRepository;
 
-    public OrderService(IOrderRepository orderRepository,IIngresoRepository ingresoRepository, ICategoriaRepository categoriaRepository)
+    public OrderService(IOrderRepository orderRepository,IIngresoRepository ingresoRepository, ICategoriaRepository categoriaRepository, ICuentaRepository cuentaRepository)
     {
         _orderRepository = orderRepository;
         _ingresoRepository = ingresoRepository;
         _categoriaRepository = categoriaRepository;
+        _cuentaRepository = cuentaRepository;
     }
     public async Task<IturriResult> GetAllGastosAsync()
     {
@@ -204,6 +207,19 @@ public class OrderService : IOrderService
 
 
         return filteredCategories.ToList();
+    }
+    public async Task<string> AgregarCuenta(AgregarCuentaRequest cuenta)
+    {
+
+        var nuevacuenta = new Cuenta
+        {
+            Nombre = cuenta.Nombre,
+           
+        };
+
+        await _cuentaRepository.AddAsync(nuevacuenta);
+
+        return "Cuenta agregada exitosamente";
     }
 
 }

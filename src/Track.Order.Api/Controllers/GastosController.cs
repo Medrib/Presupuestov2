@@ -8,17 +8,18 @@ using Track.Order.Common;
 using Track.Order.Infrastructure;
 using Track.Order.Api.Contracts.Ingreso;
 using Track.Order.Domain.Entities;
+using Track.Order.Api.Contracts.Cuenta;
 
 namespace Track.Order.Api.Controllers;
 
 [ApiController]
 [Route("/gastos")]
-public class OrderController : Controller
+public class GastosController : Controller
 {
     private readonly IOrderService _orderService;
     private readonly IMapper _mapper;
 
-    public OrderController(IOrderService orderService, IMapper mapper)
+    public GastosController(IOrderService orderService, IMapper mapper)
     {
         _orderService = orderService;
         _mapper = mapper;
@@ -88,7 +89,7 @@ public class OrderController : Controller
         }
         catch (Exception ex)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al agregar el gasto.");
+            return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al agregar el ingreso.");
         }
     }
 
@@ -106,9 +107,28 @@ public class OrderController : Controller
         }
         catch (Exception ex)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al agregar el gasto.");
+            return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al agregar el categoria.");
         }
     }
+    
+    [HttpPost("agregarCuenta")]
+    [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> AgregarCuenta([FromBody] AgregarCuentaRequest cuenta)
+    {
+        try
+        {
+            var serviceResult = await _orderService.AgregarCuenta(cuenta);
+            return Ok(serviceResult);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al agregar el cuenta.");
+        }
+    }
+   
 
     [HttpGet("orderCount")]
     [Produces("application/json")]
