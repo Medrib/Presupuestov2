@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+
 using Microsoft.EntityFrameworkCore;
+
 using Track.Order.Api.Contracts.Gasto;
 using Track.Order.Api.Contracts.Order.SearchOrders;
 using Track.Order.Application.Interfaces;
 using Track.Order.Common;
+
 using Track.Order.Infrastructure;
 using Track.Order.Api.Contracts.Ingreso;
 using Track.Order.Domain.Entities;
@@ -107,6 +110,7 @@ public class GastosController : Controller
         }
         catch (Exception ex)
         {
+
             return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al agregar el categoria.");
         }
     }

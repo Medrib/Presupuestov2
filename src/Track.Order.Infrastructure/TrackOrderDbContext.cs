@@ -15,7 +15,11 @@ public class TrackOrderDbContext : DbContext
     public DbSet<Gastos> Gasto=> Set<Gastos>();
     public DbSet<Usuario> Usuarios => Set<Usuario>();
     public DbSet<CategoriaGasto> CategoriaGasto => Set<CategoriaGasto>();
+
     public DbSet<Cuenta> cuenta => Set<Cuenta>();
+
+    public DbSet<Ingresos> Ingreso => Set<Ingresos>();
+
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
