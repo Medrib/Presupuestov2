@@ -1,10 +1,17 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+
+using Microsoft.EntityFrameworkCore;
+
 using Track.Order.Api.Contracts.Gasto;
 using Track.Order.Api.Contracts.Order.SearchOrders;
 using Track.Order.Application.Interfaces;
 using Track.Order.Common;
+
+using Track.Order.Infrastructure;
 using Track.Order.Api.Contracts.Ingreso;
+using Track.Order.Domain.Entities;
+using Track.Order.Api.Contracts.Cuenta;
 
 namespace Track.Order.Api.Controllers;
 
@@ -103,9 +110,29 @@ public class GastosController : Controller
         }
         catch (Exception ex)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al agregar el gasto.");
+
+            return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al agregar el categoria.");
         }
     }
+    
+    [HttpPost("agregarCuenta")]
+    [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> AgregarCuenta([FromBody] AgregarCuentaRequest cuenta)
+    {
+        try
+        {
+            var serviceResult = await _orderService.AgregarCuenta(cuenta);
+            return Ok(serviceResult);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al agregar el cuenta.");
+        }
+    }
+   
 
     [HttpGet("orderCount")]
     [Produces("application/json")]

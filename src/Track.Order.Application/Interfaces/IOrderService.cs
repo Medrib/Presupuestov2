@@ -4,6 +4,7 @@ using Track.Order.Api.Contracts.Order.SearchOrders;
 using Track.Order.Common.Models;
 using Track.Order.Domain.Entities;
 using Track.Order.Api.Contracts.Ingreso;
+using Track.Order.Api.Contracts.Cuenta;
 
 namespace Track.Order.Application.Interfaces;
 
@@ -19,4 +20,5 @@ public interface IOrderService
     Task<string> AgregarCategoria(AgregarCategoriaRequest categoria);
 
     Task<List<CategoriaGasto>> GetCategoriesAsync();
+    Task<string> AgregarCuenta(AgregarCuentaRequest cuenta);
 }

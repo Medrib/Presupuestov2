@@ -22,6 +22,7 @@ public static class InfrastructureBootstrapper
         services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IIngresoRepository, IngresoRepository>();
         services.AddScoped<ICategoriaRepository, CategoriaRepository>();
+        services.AddScoped<ICuentaRepository, CuentaRepository>();
 
 
         return services;
