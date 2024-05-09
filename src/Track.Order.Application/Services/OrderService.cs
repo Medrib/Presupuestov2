@@ -221,5 +221,13 @@ public class OrderService : IOrderService
 
         return "Cuenta agregada exitosamente";
     }
+    public async Task<List<Cuenta>> GetCuentaAsync()
+    {
+        var cuentas = await _cuentaRepository.GetAllAsync();
+        var cuentasFiltradas = cuentas.Where(cat => !string.IsNullOrEmpty(cat.Nombre)).ToList();
+
+
+        return cuentasFiltradas.ToList();
+    }
 
 }

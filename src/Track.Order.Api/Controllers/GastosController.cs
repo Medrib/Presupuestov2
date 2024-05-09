@@ -142,9 +142,15 @@ public class GastosController : Controller
 
     public async Task<IActionResult> CountOrdersAsync([FromQuery] Filters filters)
     {
-        var serviceResult = await _orderService.CountOrdersAsync(filters);
-        //falta manejo de errores
-        return Ok(serviceResult);
+        try
+        {
+            var serviceResult = await _orderService.CountOrdersAsync(filters);
+            return Ok(serviceResult);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al realizar el OrderCount.");
+        }
     }
 
     [HttpGet("getCategory")]
@@ -155,8 +161,37 @@ public class GastosController : Controller
 
     public async Task<IActionResult> GetCategoriesAsync()
     {
-        var serviceResult = await _orderService.GetCategoriesAsync();
-        //falta manejo de errores
-        return Ok(serviceResult);
+        try
+        {
+            var serviceResult = await _orderService.GetCategoriesAsync();
+            return Ok(serviceResult);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al realizar el GetCategory.");
+        }
+
     }
+
+    [HttpGet("getCuenta")]
+    [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+
+    public async Task<IActionResult> GetCuentaAsync()
+    {
+        try
+        {
+            var serviceResult = await _orderService.GetCuentaAsync();
+            return Ok(serviceResult);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al realizar el GetCategory.");
+        }
+
+    }
+
+
 }
