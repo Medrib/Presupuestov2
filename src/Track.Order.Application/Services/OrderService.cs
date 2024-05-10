@@ -230,4 +230,20 @@ public class OrderService : IOrderService
         return cuentasFiltradas.ToList();
     }
 
+    public async Task<string> eliminarGasto(int id)
+    {
+        var gasto = await _orderRepository.GetByIdAsync(id);
+
+        if (gasto != null)
+        {
+            await _orderRepository.DeleteAsync(gasto);
+            return "Gasto eliminado exitosamente";
+        }
+        else
+        {
+            return "No se encontró ningún gasto con el ID proporcionado";
+        }
+
+    }
+
 }
