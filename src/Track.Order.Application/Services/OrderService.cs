@@ -243,7 +243,19 @@ public class OrderService : IOrderService
         {
             return "No se encontró ningún gasto con el ID proporcionado";
         }
-
+    }
+    public async Task<string> EditarGasto(Gastos gasto)
+    {
+        var gastos = await _orderRepository.GetAllAsync();
+        if (gastos != null)
+        {
+            await _orderRepository.UpdateAsync(gasto);
+            return "Gasto editado exitosamente";
+        }
+        else
+        {
+            return "No se encontró ningún gasto";
+        }
     }
 
 }

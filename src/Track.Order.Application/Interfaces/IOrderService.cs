@@ -23,4 +23,5 @@ public interface IOrderService
     Task<string> AgregarCuenta(AgregarCuentaRequest cuenta);
     Task<List<Cuenta>> GetCuentaAsync();
     Task <string> eliminarGasto(int id);
+    Task<string> EditarGasto(Gastos gasto);
 }
