@@ -1,17 +1,12 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-
-using Microsoft.EntityFrameworkCore;
-
 using Track.Order.Api.Contracts.Gasto;
 using Track.Order.Api.Contracts.Order.SearchOrders;
 using Track.Order.Application.Interfaces;
 using Track.Order.Common;
-
-using Track.Order.Infrastructure;
 using Track.Order.Api.Contracts.Ingreso;
-using Track.Order.Domain.Entities;
 using Track.Order.Api.Contracts.Cuenta;
+using Track.Order.Domain.Entities;
 
 namespace Track.Order.Api.Controllers;
 
@@ -72,7 +67,7 @@ public class GastosController : Controller
             var serviceResult = await _orderService.AgregarGasto(detalle);
             return Ok(serviceResult);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al agregar el gasto.");
         }
@@ -90,7 +85,7 @@ public class GastosController : Controller
             var serviceResult = await _orderService.AgregarIngreso(detalle);
             return Ok(serviceResult);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al agregar el ingreso.");
         }
@@ -108,7 +103,7 @@ public class GastosController : Controller
             var serviceResult = await _orderService.AgregarCategoria(categoria);
             return Ok(serviceResult);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
 
             return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al agregar el categoria.");
@@ -127,7 +122,7 @@ public class GastosController : Controller
             var serviceResult = await _orderService.AgregarCuenta(cuenta);
             return Ok(serviceResult);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al agregar el cuenta.");
         }
@@ -147,7 +142,7 @@ public class GastosController : Controller
             var serviceResult = await _orderService.CountOrdersAsync(filters);
             return Ok(serviceResult);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al realizar el OrderCount.");
         }
@@ -166,7 +161,7 @@ public class GastosController : Controller
             var serviceResult = await _orderService.GetCategoriesAsync();
             return Ok(serviceResult);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al realizar el GetCategory.");
         }
@@ -186,7 +181,7 @@ public class GastosController : Controller
             var serviceResult = await _orderService.GetCuentaAsync();
             return Ok(serviceResult);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al realizar el GetCuenta.");
         }
@@ -208,6 +203,24 @@ public class GastosController : Controller
         catch (Exception)
         {
             return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al eliminar gasto.");
+        }
+    }
+
+    [HttpPut("editar")]
+    [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> EditarGasto(Gastos gasto)
+    {
+        try
+        {
+            var serviceResult = await _orderService.EditarGasto(gasto);
+            return Ok(serviceResult);
+        }
+        catch (Exception)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al editar gasto.");
         }
     }
 
