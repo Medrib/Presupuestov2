@@ -10,3 +10,7 @@ public class AgregarGastoRequest
     public int IDCategoriaGasto { get; set; }
 } 
 
+//public class eliminarGastosRequest
+//{
+//    public int IDGasto { get; set; }
+//}

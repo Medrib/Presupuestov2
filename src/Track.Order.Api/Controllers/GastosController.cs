@@ -188,10 +188,27 @@ public class GastosController : Controller
         }
         catch (Exception ex)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al realizar el GetCategory.");
+            return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al realizar el GetCuenta.");
         }
 
     }
 
+    [HttpDelete("delete/{id}")]
+    [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> eliminarGasto(int id)
+    {
+        try
+        {
+            var serviceResult = await _orderService.eliminarGasto(id);
+            return Ok(serviceResult);
+        }
+        catch (Exception)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al eliminar gasto.");
+        }
+    }
 
 }
