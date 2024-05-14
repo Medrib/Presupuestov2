@@ -7,7 +7,7 @@ namespace Track.Order.Domain.Entities;
 public class Cuenta
 {
     [Key]
-    public int id { get; set; }
+    public int IdCuenta { get; set; }
     public string Nombre { get; set; } = string.Empty;
 
 }

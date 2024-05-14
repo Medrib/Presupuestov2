@@ -218,7 +218,7 @@ public class GastosController : Controller
             var serviceResult = await _orderService.editarGasto(id);
             return Ok(serviceResult);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
 
             return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al editar el gasto.");
