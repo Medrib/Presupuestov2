@@ -8,7 +8,7 @@ namespace Track.Order.Infrastructure.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Cuenta> builder)
         {
-            builder.HasKey(estado => estado.id);
+            builder.HasKey(estado => estado.IdCuenta);
 
             builder.Property(estado => estado.Nombre);
             

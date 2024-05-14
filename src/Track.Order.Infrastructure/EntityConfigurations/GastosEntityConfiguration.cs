@@ -22,5 +22,9 @@ public class OrdersEntityConfiguration : IEntityTypeConfiguration<Gastos>
                .WithMany()
                .HasForeignKey(order => order.IDCategoriaGasto);
 
+        builder.HasOne(order => order.Cuenta)
+              .WithMany()
+              .HasForeignKey(order => order.IDCuenta);
+
     }
 }

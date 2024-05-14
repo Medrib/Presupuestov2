@@ -31,7 +31,7 @@ public class OrderService : IOrderService
 
         Expression<Func<Domain.Entities.Gastos, bool>> filter = BuildFilter(filters);
         //var order = await _orderRepository.GetAllAsync();
-        var order = await _orderRepository.SearchAsync(filter, orderBy, "CategoriaGasto");
+        var order = await _orderRepository.SearchAsync(filter, orderBy, "CategoriaGasto,Cuenta");
 
         if (order is null)
             return IturriResult.Fail(new Common.Errors.IturriError(null, "order_not_found", System.Net.HttpStatusCode.NotFound));
@@ -165,6 +165,7 @@ public class OrderService : IOrderService
         {
             IDPresupuesto = detalle.IDPresupuesto,
             IDCategoriaGasto = detalle.IDCategoriaGasto,
+            IDCuenta =detalle.IdCuenta,
             Monto = detalle.Monto,
             Fecha = detalle.Fecha,
             Descripcion = detalle.Descripcion
