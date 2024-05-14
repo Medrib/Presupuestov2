@@ -206,21 +206,22 @@ public class GastosController : Controller
         }
     }
 
-    [HttpPut("editar")]
+    [HttpPut("editarGasto")]
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> EditarGasto(Gastos gasto)
+    public async Task<IActionResult> editarGasto([FromBody] editarGastoRequest id)
     {
         try
         {
-            var serviceResult = await _orderService.EditarGasto(gasto);
+            var serviceResult = await _orderService.editarGasto(id);
             return Ok(serviceResult);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al editar gasto.");
+
+            return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al editar el gasto.");
         }
     }
 

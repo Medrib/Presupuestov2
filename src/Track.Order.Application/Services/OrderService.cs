@@ -244,17 +244,22 @@ public class OrderService : IOrderService
             return "No se encontró ningún gasto con el ID proporcionado";
         }
     }
-    public async Task<string> EditarGasto(Gastos gasto)
+    public async Task<string> editarGasto(editarGastoRequest detalle)
     {
-        var gastos = await _orderRepository.GetAllAsync();
-        if (gastos != null)
+        var datos = await _orderRepository.GetByIdAsync(detalle.IDGasto);
+
+        if (datos != null)
         {
-            await _orderRepository.UpdateAsync(gasto);
-            return "Gasto editado exitosamente";
+            datos.Monto = detalle.Monto;
+            datos.Fecha = detalle.Fecha;
+            datos.Descripcion = detalle.Descripcion;
+
+            await _orderRepository.UpdateAsync(datos);
+            return "Gasto editado exitosamente.";
         }
         else
         {
-            return "No se encontró ningún gasto";
+            return "Ocurrio un problema al editar el gasto.";
         }
     }
 
