@@ -58,7 +58,7 @@ public class OrderService : IOrderService
         }
 
 
-        var ordersFiltered = await _orderRepository.SearchAsync(filter, orderBy, "CategoriaGasto");
+        var ordersFiltered = await _orderRepository.SearchAsync(filter, orderBy, "CategoriaGasto,Cuenta");
         bool allFiltersAreNull = AreAllPropertiesNull(filters);
 
 
