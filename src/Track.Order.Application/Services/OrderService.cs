@@ -194,7 +194,7 @@ public class OrderService : IOrderService
         var nuevoCategoria = new CategoriaGasto
         {
             Nombre = detalle.Nombre,
-            Descripcion = null
+            Descripcion = detalle.Descripcion
         };
 
         await _categoriaRepository.AddAsync(nuevoCategoria);
