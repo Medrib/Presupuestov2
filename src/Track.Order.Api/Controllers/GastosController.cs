@@ -6,7 +6,6 @@ using Track.Order.Application.Interfaces;
 using Track.Order.Common;
 using Track.Order.Api.Contracts.Ingreso;
 using Track.Order.Api.Contracts.Cuenta;
-using Track.Order.Domain.Entities;
 
 namespace Track.Order.Api.Controllers;
 

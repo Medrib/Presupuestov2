@@ -18,4 +18,6 @@ public class editarGastoRequest
     public DateTime? Fecha { get; set; }
     public decimal Monto { get; set; }
     public string Descripcion { get; set; } = string.Empty;
+    public int IDCategoriaGasto { get; set; }
+    public int IdCuenta { get; set; }
 }
