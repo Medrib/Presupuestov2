@@ -30,7 +30,6 @@ public class OrderService : IOrderService
         var filters = new Filters();
 
         Expression<Func<Domain.Entities.Gastos, bool>> filter = BuildFilter(filters);
-        //var order = await _orderRepository.GetAllAsync();
         var order = await _orderRepository.SearchAsync(filter, orderBy, "CategoriaGasto,Cuenta");
 
         if (order is null)
@@ -53,7 +52,7 @@ public class OrderService : IOrderService
         {
             orderBy = OrderByColumn(sort.ColumnName!, sort.SortBy!);
 
-            if (orderBy == null) // column name does not exist
+            if (orderBy == null)
                 return IturriResult.Fail(new Common.Errors.IturriError(null, $"{sort.ColumnName}_column_does_not_exist", System.Net.HttpStatusCode.BadRequest));
         }
 
@@ -254,6 +253,8 @@ public class OrderService : IOrderService
             datos.Monto = detalle.Monto;
             datos.Fecha = detalle.Fecha;
             datos.Descripcion = detalle.Descripcion;
+            datos.IDCategoriaGasto = detalle.IDCategoriaGasto;
+            datos.IDCuenta = detalle.IdCuenta;
 
             await _orderRepository.UpdateAsync(datos);
             return "Gasto editado exitosamente.";
