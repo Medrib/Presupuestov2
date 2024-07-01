@@ -6,6 +6,7 @@ using Track.Order.Application.Interfaces;
 using Track.Order.Common;
 using Track.Order.Api.Contracts.Ingreso;
 using Track.Order.Api.Contracts.Cuenta;
+using Track.Order.Api.Contracts.Usuario;
 
 namespace Track.Order.Api.Controllers;
 
@@ -52,6 +53,85 @@ public class GastosController : Controller
             return serviceResult.BuildErrorResult();
 
         return Ok(serviceResult.Data);
+    }
+
+    [HttpGet("orderCount")]
+    [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+
+    public async Task<IActionResult> CountOrdersAsync([FromQuery] Filters filters)
+    {
+        try
+        {
+            var serviceResult = await _orderService.CountOrdersAsync(filters);
+            return Ok(serviceResult);
+        }
+        catch (Exception)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al realizar el OrderCount.");
+        }
+    }
+
+    [HttpGet("getCategory")]
+    [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+
+    public async Task<IActionResult> GetCategoriesAsync()
+    {
+        try
+        {
+            var serviceResult = await _orderService.GetCategoriesAsync();
+            return Ok(serviceResult);
+        }
+        catch (Exception)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al realizar el GetCategory.");
+        }
+
+    }
+
+    [HttpGet("getCuenta")]
+    [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+
+    public async Task<IActionResult> GetCuentaAsync()
+    {
+        try
+        {
+            var serviceResult = await _orderService.GetCuentaAsync();
+            return Ok(serviceResult);
+        }
+        catch (Exception)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al realizar el GetCuenta.");
+        }
+
+    }
+
+    [HttpGet("getUsuario")]
+    [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+
+    public async Task<IActionResult> GetUsuarioAsync()
+    {
+        try
+        {
+            var serviceResult = await _orderService.GetUsuarioAsync();
+            return Ok(serviceResult);
+        }
+        catch (Exception)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al realizar el GetUsuario.");
+        }
+
     }
 
     [HttpPost("agregarGasto")]
@@ -126,65 +206,31 @@ public class GastosController : Controller
             return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al agregar el cuenta.");
         }
     }
-   
 
-    [HttpGet("orderCount")]
+    [HttpPost("login")]
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-
-    public async Task<IActionResult> CountOrdersAsync([FromQuery] Filters filters)
+    public async Task<IActionResult> loginUser([FromBody] UsuarioRequest loginRequest)
     {
         try
         {
-            var serviceResult = await _orderService.CountOrdersAsync(filters);
-            return Ok(serviceResult);
+            var usuario = await _orderService.loginUser(loginRequest);
+
+            if (usuario != null)
+            {
+                return Ok(usuario);
+            }
+            else
+            {
+                return Unauthorized("Usuario y contraseñas incorrectas.");
+            }
         }
         catch (Exception)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al realizar el OrderCount.");
+            return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error durante el login.");
         }
-    }
-
-    [HttpGet("getCategory")]
-    [Produces("application/json")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-
-    public async Task<IActionResult> GetCategoriesAsync()
-    {
-        try
-        {
-            var serviceResult = await _orderService.GetCategoriesAsync();
-            return Ok(serviceResult);
-        }
-        catch (Exception)
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al realizar el GetCategory.");
-        }
-
-    }
-
-    [HttpGet("getCuenta")]
-    [Produces("application/json")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-
-    public async Task<IActionResult> GetCuentaAsync()
-    {
-        try
-        {
-            var serviceResult = await _orderService.GetCuentaAsync();
-            return Ok(serviceResult);
-        }
-        catch (Exception)
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al realizar el GetCuenta.");
-        }
-
     }
 
     [HttpDelete("delete/{id}")]
@@ -223,5 +269,22 @@ public class GastosController : Controller
             return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al editar el gasto.");
         }
     }
+    [HttpPost("agregarUsuario")]
+    [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> CreateUsuario([FromBody]CreateUsuarioRequest detalle)
+    {
+        try
+        {
+            var serviceResult = await _orderService.CreateUsuario(detalle);
+            return Ok(serviceResult);
+        }
+        catch (Exception)
+        {
 
+            return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al agregar el usuario.");
+        }
+    }
 }

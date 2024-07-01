@@ -2,15 +2,15 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Track.Order.Domain.Entities;
 
-namespace Track.Order.Infrastructure.EntityConfigurations;
-
-public class UsuariosEntityConfiguration : IEntityTypeConfiguration<CategoriaGasto>
+namespace Track.Order.Infrastructure.EntityConfigurations
 {
-    public void Configure(EntityTypeBuilder<CategoriaGasto> builder)
+    public class UsuariosEntityConfiguration : IEntityTypeConfiguration<Usuario>
     {
-        builder.HasKey(usuario => usuario.IDCategoriaGasto);
-
-        builder.Property(usuario => usuario.Nombre);
-        builder.Property(usuario => usuario.Descripcion);
+        public void Configure(EntityTypeBuilder<Usuario> builder)
+        {
+            builder.HasKey(estado => estado.IDUsuario);
+            builder.Property(estado => estado.Nombre);
+            builder.Property(estado => estado.CorreoElectronico);
+        }
     }
 }

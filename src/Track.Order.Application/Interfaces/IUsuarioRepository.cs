@@ -2,7 +2,7 @@
 
 namespace Track.Order.Application.Interfaces
 {
-    public interface ICuentaRepository : IBaseRespository<Cuenta, int>
+    public interface IUsuarioRepository : IBaseRespository<Usuario, int>
     {
     }
 }
