@@ -20,9 +20,10 @@ public static class InfrastructureBootstrapper
 
         // Repositories
         services.AddScoped<IOrderRepository, OrderRepository>();
-            services.AddScoped<IIngresoRepository, IngresoRepository>();
+        services.AddScoped<IIngresoRepository, IngresoRepository>();
         services.AddScoped<ICategoriaRepository, CategoriaRepository>();
         services.AddScoped<ICuentaRepository, CuentaRepository>();
+        services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 
 
         return services;

@@ -7,6 +7,9 @@ using Track.Order.Common.Models;
 using Track.Order.Domain.Entities;
 using Track.Order.Api.Contracts.Ingreso;
 using Track.Order.Api.Contracts.Cuenta;
+using Track.Order.Api.Contracts.Usuario;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Track.Order.Application.Services;
 
@@ -16,13 +19,19 @@ public class OrderService : IOrderService
     private readonly IIngresoRepository _ingresoRepository;
     private readonly ICategoriaRepository _categoriaRepository;
     private readonly ICuentaRepository _cuentaRepository;
+    private readonly IUsuarioRepository _usuarioRepository;
 
-    public OrderService(IOrderRepository orderRepository,IIngresoRepository ingresoRepository, ICategoriaRepository categoriaRepository, ICuentaRepository cuentaRepository)
+    public OrderService(IOrderRepository orderRepository,
+        IIngresoRepository ingresoRepository, 
+        ICategoriaRepository categoriaRepository, 
+        ICuentaRepository cuentaRepository,
+        IUsuarioRepository usuarioRepository)
     {
         _orderRepository = orderRepository;
         _ingresoRepository = ingresoRepository;
         _categoriaRepository = categoriaRepository;
         _cuentaRepository = cuentaRepository;
+        _usuarioRepository = usuarioRepository;
     }
     public async Task<IturriResult> GetAllGastosAsync()
     {
@@ -213,8 +222,7 @@ public class OrderService : IOrderService
 
         var nuevacuenta = new Cuenta
         {
-            Nombre = cuenta.Nombre,
-           
+            Nombre = cuenta.Nombre
         };
 
         await _cuentaRepository.AddAsync(nuevacuenta);
@@ -227,8 +235,9 @@ public class OrderService : IOrderService
         var cuentasFiltradas = cuentas.Where(cat => !string.IsNullOrEmpty(cat.Nombre)).ToList();
 
 
-        return cuentasFiltradas.ToList();
+        return cuentas.ToList();
     }
+
 
     public async Task<string> eliminarGasto(int id)
     {
@@ -264,5 +273,42 @@ public class OrderService : IOrderService
             return "Ocurrio un problema al editar el gasto.";
         }
     }
+    public async Task<List<Usuario>> GetUsuarioAsync()
+    {
+        var usuario = await _usuarioRepository.GetAllAsync();
+        var usuariosObtenidos = usuario.Where(cat => !string.IsNullOrEmpty(cat.Nombre)).ToList();
 
+        return usuario.ToList();
+    }
+
+    public async Task<Usuario> loginUser(UsuarioRequest loginRequest)
+    {
+        var usuario = await _usuarioRepository.SearchAsync(u => u.CorreoElectronico == loginRequest.CorreoElectronico);
+        var loginUsuario = usuario.FirstOrDefault();
+
+        if (loginUsuario != null && loginUsuario.Contraseña == loginRequest.Contraseña)
+        {
+            
+            return loginUsuario;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public async Task<string> CreateUsuario(CreateUsuarioRequest detalle)
+    {
+
+        var nuevoUsuario = new Usuario
+        {
+            Nombre = detalle.Nombre,
+            CorreoElectronico = detalle.CorreoElectronico,
+            Contraseña = detalle.Contraseña,
+        };
+
+        await _usuarioRepository.AddAsync(nuevoUsuario);
+    
+        return "Usuario agregado exitosamente";
+    }
 }

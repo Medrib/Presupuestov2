@@ -3,12 +3,10 @@ using Track.Order.Domain.Entities;
 
 namespace Track.Order.Infrastructure.Repositories
 {
-    public class CuentaRepository : BaseRepository<Cuenta, int>, ICuentaRepository
+    public class UsuarioRepository : BaseRepository<Usuario, int>, IUsuarioRepository
     {
-        public CuentaRepository(TrackOrderDbContext context)
+        public UsuarioRepository(TrackOrderDbContext context)
          : base(context)
         { }
     }
 }
-
-

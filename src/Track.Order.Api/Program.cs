@@ -1,7 +1,4 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
 using Serilog;
-using Serilog.Events;
 using Track.Order.Application;
 using Track.Order.Infrastructure;
 
