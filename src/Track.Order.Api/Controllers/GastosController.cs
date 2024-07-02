@@ -269,6 +269,7 @@ public class GastosController : Controller
             return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al editar el gasto.");
         }
     }
+
     [HttpPost("agregarUsuario")]
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK)]

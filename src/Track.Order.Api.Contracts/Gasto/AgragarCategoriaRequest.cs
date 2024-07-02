@@ -1,6 +1,4 @@
-﻿
-
-namespace Track.Order.Api.Contracts.Gasto
+﻿namespace Track.Order.Api.Contracts.Gasto
 {
     public class AgregarCategoriaRequest
     {
