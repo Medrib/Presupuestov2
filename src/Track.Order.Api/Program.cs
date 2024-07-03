@@ -1,6 +1,8 @@
 using Serilog;
 using Track.Order.Application;
+using Track.Order.Application.Interfaces;
 using Track.Order.Infrastructure;
+using Track.Order.Application.Services;
 
 namespace Track.Order.Api
 {
@@ -30,6 +32,11 @@ namespace Track.Order.Api
                 builder.Services.AddSwaggerGen();
                 builder.Services.ConfigureOptions(builder.Configuration);
                 builder.Services.ConfigureAutoMapper();
+
+                builder.Services.AddScoped<IUsuarioservice,UsuarioService>();
+                builder.Services.AddScoped<ICategoriaService, CategoriaService>();
+                builder.Services.AddScoped<ICuentaService, CuentaService>();
+                builder.Services.AddScoped<IIngresosService, IngresosService>();
 
                 var app = builder.Build();
 
