@@ -16,7 +16,7 @@ namespace Track.Order.Application.Services;
 public class OrderService : IOrderService
 {
     private readonly IOrderRepository _orderRepository;
-    private readonly IIngresoRepository _ingresoRepository;
+
     private readonly ICategoriaRepository _categoriaRepository;
     private readonly ICuentaRepository _cuentaRepository;
     private readonly IUsuarioRepository _usuarioRepository;
@@ -28,7 +28,6 @@ public class OrderService : IOrderService
         IUsuarioRepository usuarioRepository)
     {
         _orderRepository = orderRepository;
-        _ingresoRepository = ingresoRepository;
         _categoriaRepository = categoriaRepository;
         _cuentaRepository = cuentaRepository;
         _usuarioRepository = usuarioRepository;
@@ -183,74 +182,28 @@ public class OrderService : IOrderService
         return "Gasto agregado exitosamente";
     }
 
-    public async Task<string> AgregarIngreso(AgregarIngresoRequest detalle)
-    {
-        var nuevoIngreso = new Ingresos
-        {
-            IDPresupuesto = detalle.IDPresupuesto,
-            Monto = detalle.Monto,
-            Fecha = detalle.Fecha,
-            Descripcion = detalle.Descripcion
-        };
-        await _ingresoRepository.AddAsync(nuevoIngreso);
-
-        return "Ingreso agregado exitosamente";
-    }
-    public async Task<string> AgregarCategoria(AgregarCategoriaRequest detalle)
-    {
-
-        var nuevoCategoria = new CategoriaGasto
-        {
-            Nombre = detalle.Nombre,
-            Descripcion = detalle.Descripcion
-        };
-
-        await _categoriaRepository.AddAsync(nuevoCategoria);
-
-        return "Categoria agregado exitosamente";
-    }
-    public async Task<List<CategoriaGasto>> GetCategoriesAsync()
-    {
-        var categories = await _categoriaRepository.GetAllAsync();
-        var filteredCategories = categories.Where(cat => !string.IsNullOrEmpty(cat.Nombre)); 
-
-
-        return filteredCategories.ToList();
-    }
-    public async Task<string> AgregarCuenta(AgregarCuentaRequest cuenta)
-    {
-
-        var nuevacuenta = new Cuenta
-        {
-            Nombre = cuenta.Nombre
-        };
-
-        await _cuentaRepository.AddAsync(nuevacuenta);
-
-        return "Cuenta agregada exitosamente";
-    }
-    public async Task<List<Cuenta>> GetCuentaAsync()
-    {
-        var cuentas = await _cuentaRepository.GetAllAsync();
-        var cuentasFiltradas = cuentas.Where(cat => !string.IsNullOrEmpty(cat.Nombre)).ToList();
-
-
-        return cuentas.ToList();
-    }
-
+   
 
     public async Task<string> eliminarGasto(int id)
     {
-        var gasto = await _orderRepository.GetByIdAsync(id);
+        try
+        { 
+            var gasto = await _orderRepository.GetByIdAsync(id);
 
-        if (gasto != null)
-        {
-            await _orderRepository.DeleteAsync(gasto);
-            return "Gasto eliminado exitosamente";
+            if (gasto != null)
+            {
+                await _orderRepository.DeleteAsync(gasto);
+                return "Gasto eliminado exitosamente";
+            }
+            else
+            {
+                return "No se encontró ningún gasto con el ID proporcionado";
+            }
         }
-        else
+        catch (Exception ex)
         {
-            return "No se encontró ningún gasto con el ID proporcionado";
+            Console.WriteLine(ex.Message);
+            throw;
         }
     }
     public async Task<string> editarGasto(editarGastoRequest detalle)
@@ -310,5 +263,28 @@ public class OrderService : IOrderService
         await _usuarioRepository.AddAsync(nuevoUsuario);
     
         return "Usuario agregado exitosamente";
+    }
+    public async Task<string> eliminarUsuario(int id)
+    {
+        var usuario = await _usuarioRepository.GetByIdAsync(id);
+
+        try
+        {
+
+            if (usuario != null)
+            {
+                await _usuarioRepository.DeleteAsync(usuario);
+                return "usuario eliminado exitosamente";
+            }
+            else
+            {
+                return "No se encontró ningún usuario con el ID proporcionado";
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            throw;
+        }
     }
 }
