@@ -36,18 +36,27 @@ public class UsuarioService : IUsuarioservice
 
     public async Task<string> CreateUsuario(CreateUsuarioRequest detalle)
     {
+        var usuarios = await _usuarioRepository.GetAllAsync();
+        var usuarioExistente = usuarios.FirstOrDefault(u => u.CorreoElectronico == detalle.CorreoElectronico);
 
-        var nuevoUsuario = new Usuario
+        if (usuarioExistente != null)
         {
-            Nombre = detalle.Nombre,
-            CorreoElectronico = detalle.CorreoElectronico,
-            Contraseña = detalle.Contraseña,
-        };
+            return "Ya existe una cuenta con ese correo electrónico";
+        }
+        else
+        {
+            var nuevoUsuario = new Usuario
+            {
+                Nombre = detalle.Nombre,
+                CorreoElectronico = detalle.CorreoElectronico,
+                Contraseña = detalle.Contraseña,
+            };
 
-        await _usuarioRepository.AddAsync(nuevoUsuario);
-
-        return "Usuario agregado exitosamente";
+            await _usuarioRepository.AddAsync(nuevoUsuario);
+            return "Usuario agregado exitosamente";
+        }
     }
+
     public async Task<string> eliminarUsuario(int id)
     {
         var usuario = await _usuarioRepository.GetByIdAsync(id);

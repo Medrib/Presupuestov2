@@ -3,17 +3,25 @@ using Track.Order.Application.Interfaces;
 using Track.Order.Api.Contracts.Usuario;
 using AutoMapper;
 using Track.Order.Application.Services;
+using Microsoft.Data.SqlClient;
+using System.Data;
 
 namespace Track.Order.Api.Controllers;
 [ApiController]
 [Route("/gastos")]
-public class UsuarioController : Controller
+public class UsuarioController : ControllerBase
 {
     private readonly IUsuarioservice _usuarioService;
-    public UsuarioController(IUsuarioservice usuarioService)
+    private readonly string _cadenaSQL;
+
+    public UsuarioController(IUsuarioservice usuarioService, IConfiguration config)
     {
         _usuarioService = usuarioService;
+        _cadenaSQL = config.GetConnectionString("SqlServerConnection");
     }
+
+
+
     [HttpGet("getUsuario")]
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -40,7 +48,7 @@ public class UsuarioController : Controller
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> CreateUsuario([FromBody] CreateUsuarioRequest detalle)
-    {
+    { 
         try
         {
             var serviceResult = await _usuarioService.CreateUsuario(detalle);
