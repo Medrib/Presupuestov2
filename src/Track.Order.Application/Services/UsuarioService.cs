@@ -36,8 +36,12 @@ public class UsuarioService : IUsuarioservice
 
     public async Task<string> CreateUsuario(CreateUsuarioRequest detalle)
     {
+        if (string.IsNullOrWhiteSpace(detalle.CorreoElectronico))
+        {
+            return "El correo electrónico no puede estar vacío";
+        }
         var usuarios = await _usuarioRepository.GetAllAsync();
-        var usuarioExistente = usuarios.FirstOrDefault(u => u.CorreoElectronico == detalle.CorreoElectronico);
+        var usuarioExistente = usuarios.FirstOrDefault(u => (u.CorreoElectronico == detalle.CorreoElectronico));
 
         if (usuarioExistente != null)
         {
