@@ -38,14 +38,15 @@ public class UsuarioService : IUsuarioservice
     {
         if (string.IsNullOrWhiteSpace(detalle.CorreoElectronico))
         {
-            return "El correo electrónico no puede estar vacío";
+                throw new ArgumentException("El correo electrónico no puede estar vacío");
         }
+
         var usuarios = await _usuarioRepository.GetAllAsync();
-        var usuarioExistente = usuarios.FirstOrDefault(u => (u.CorreoElectronico == detalle.CorreoElectronico));
+        var usuarioExistente = usuarios.FirstOrDefault(u => u.CorreoElectronico == detalle.CorreoElectronico);
 
         if (usuarioExistente != null)
         {
-            return "Ya existe una cuenta con ese correo electrónico";
+            throw new ArgumentException("el mail ya esta en uso");
         }
         else
         {

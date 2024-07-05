@@ -8,7 +8,7 @@ using System.Data;
 
 namespace Track.Order.Api.Controllers;
 [ApiController]
-[Route("/gastos")]
+[Route("/usuario")]
 public class UsuarioController : ControllerBase
 {
     private readonly IUsuarioservice _usuarioService;
@@ -54,7 +54,7 @@ public class UsuarioController : ControllerBase
             var serviceResult = await _usuarioService.CreateUsuario(detalle);
             return Ok(serviceResult);
         }
-        catch (Exception)
+        catch (ArgumentException)
         {
 
             return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al agregar el usuario.");

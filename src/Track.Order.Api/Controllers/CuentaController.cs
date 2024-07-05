@@ -9,7 +9,7 @@ using Track.Order.Api.Contracts.Cuenta;
 
 namespace Track.Order.Api.Controllers;
 [ApiController]
-[Route("/gastos")]
+[Route("/cuenta")]
 public class CuentaController : Controller
 {
     private readonly ICuentaService _cuentaService;
