@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <UserSecretsId>69ac933a-2bc1-4bff-8f6a-0e627eedb2b6</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Track.Order.Api.Contracts\Track.Order.Api.Contracts.csproj" />
+    <ProjectReference Include="..\Track.Order.Common\Track.Order.Common.csproj" />
+    <ProjectReference Include="..\Track.Order.Domain\Track.Order.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
